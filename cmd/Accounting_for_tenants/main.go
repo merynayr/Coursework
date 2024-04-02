@@ -65,6 +65,7 @@ func main() {
 	//TODO: run server
 
 	log.Info("starting server", slog.String("address", cfg.Address))
+
 	srv := &http.Server{
 		Addr:         cfg.Address,
 		Handler:      router,
@@ -84,7 +85,7 @@ func setupLogger(env string) *slog.Logger {
 	var log *slog.Logger
 
 	switch env {
-	case "Local":
+	case "local":
 		log = setupPrettySlog()
 	default:
 		log = slog.New(
