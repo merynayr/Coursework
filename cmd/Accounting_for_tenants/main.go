@@ -7,8 +7,10 @@ import (
 	"os"
 
 	"Coursework/internal/config"
-	"Coursework/internal/http-server/handlers/query/save"
-	"Coursework/internal/http-server/handlers/redirect"
+	"Coursework/internal/http-server/handlers/ClientHandlers/delete"
+	"Coursework/internal/http-server/handlers/ClientHandlers/redirect"
+	"Coursework/internal/http-server/handlers/ClientHandlers/save"
+	"Coursework/internal/http-server/handlers/ClientHandlers/update"
 	"Coursework/internal/http-server/handlers/ui"
 	mwLogger "Coursework/internal/http-server/middleware/logger"
 	"Coursework/internal/lib/logger/handlers/slogpretty"
@@ -34,7 +36,7 @@ func main() {
 		slog.String("env", cfg.Env),
 		slog.String("version", "123"),
 	)
-	// log.Debug("debug messages are enabled")
+
 	//TODO: init storage
 
 	storage, err := sqlite.New(cfg.StoragePath)
@@ -56,8 +58,10 @@ func main() {
 	router.Use(middleware.URLFormat)
 
 	router.HandleFunc("/", ui.New(log))
-	router.Post("/client", save.New(log, storage))
-	router.Get("/clients", redirect.New(log, storage))
+	router.Post("/сlient/add", save.New(log, storage))
+	router.Post("/client/del", delete.Del(log, storage))
+	router.Get("/client/select", redirect.New(log, storage))
+	router.Post("/сlient/update", update.Update(log, storage))
 
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 	router.Handle("/static/*", http.StripPrefix("/static", fileServer))

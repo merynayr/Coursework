@@ -56,3 +56,28 @@ func (s *Storage) SelectClients() ([]Client, error) {
 
 	return clients, nil
 }
+
+func (s *Storage) DeleteClient(clientID int) error {
+	const op = "storage.Client.DeleteClient"
+	query := `DELETE FROM Clients WHERE client_id = ?`
+
+	_, err := s.db.Exec(query, clientID)
+	if err != nil {
+		return fmt.Errorf("%s: %w", op, storage.ErrExists)
+	}
+
+	return nil
+}
+
+func (s *Storage) UpdateClient(client Client) error {
+	// Подготовить SQL-запрос для обновления данных клиента
+	query := "UPDATE clients SET Name = ?, Type = ?, Phone = ? WHERE ClientID = ?"
+
+	// Выполнить SQL-запрос с передачей аргументов
+	_, err := s.db.Exec(query, client.Name, client.Type, client.Phone, client.ClientID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
