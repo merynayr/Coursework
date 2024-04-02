@@ -65,6 +65,7 @@ func main() {
 	//TODO: run server
 
 	log.Info("starting server", slog.String("address", cfg.Address))
+
 	srv := &http.Server{
 		Addr:         cfg.Address,
 		Handler:      router,
