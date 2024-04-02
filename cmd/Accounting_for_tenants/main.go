@@ -84,7 +84,7 @@ func setupLogger(env string) *slog.Logger {
 	var log *slog.Logger
 
 	switch env {
-	case "Local":
+	case "local":
 		log = setupPrettySlog()
 	default:
 		log = slog.New(
