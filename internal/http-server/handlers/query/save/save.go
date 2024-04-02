@@ -2,7 +2,6 @@ package save
 
 import (
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
 
@@ -19,7 +18,7 @@ import (
 )
 
 type Request struct {
-	ClientID int    `json:"client_id" validate:"required"`
+	ClientID int    `json:"clientID" validate:"required"`
 	Name     string `json:"name" validate:"required"`
 	Type     string `json:"type" validate:"required"`
 	Phone    string `json:"phone" validate:"required"`
@@ -41,10 +40,6 @@ func New(log *slog.Logger, cltSaver ClientSaver) http.HandlerFunc {
 
 		var req Request
 		err := render.DecodeJSON(r.Body, &req)
-
-		fmt.Println("_--------------------------")
-		fmt.Println(req) // req = {{0   }}
-		fmt.Println("_--------------------------")
 
 		if errors.Is(err, io.EOF) {
 			// Такую ошибку встретим, если получили запрос с пустым телом.

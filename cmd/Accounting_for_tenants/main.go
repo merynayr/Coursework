@@ -9,6 +9,7 @@ import (
 	"Coursework/internal/config"
 	"Coursework/internal/http-server/handlers/query/save"
 	"Coursework/internal/http-server/handlers/redirect"
+	"Coursework/internal/http-server/handlers/ui"
 	mwLogger "Coursework/internal/http-server/middleware/logger"
 	"Coursework/internal/lib/logger/handlers/slogpretty"
 	"Coursework/internal/lib/logger/sl"
@@ -42,9 +43,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	client := sqlite.Client{ClientID: 1, Name: "Dmitry", Type: "ФизЛицо", Phone: "89279664332"}
-	storage.AddClient(client)
-
 	log.Info("starting storage")
 
 	//TODO: init router
@@ -57,13 +55,16 @@ func main() {
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.URLFormat)
 
+	router.HandleFunc("/", ui.New(log))
 	router.Post("/client", save.New(log, storage))
 	router.Get("/clients", redirect.New(log, storage))
+
+	fileServer := http.FileServer(http.Dir("./ui/static/"))
+	router.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
 	//TODO: run server
 
 	log.Info("starting server", slog.String("address", cfg.Address))
-
 	srv := &http.Server{
 		Addr:         cfg.Address,
 		Handler:      router,
