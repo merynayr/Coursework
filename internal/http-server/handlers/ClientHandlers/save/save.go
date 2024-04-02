@@ -70,7 +70,7 @@ func New(log *slog.Logger, cltSaver ClientSaver) http.HandlerFunc {
 			return
 		}
 
-		clnt := sqlite.Client{ClientID: req.ClientID, Name: req.Name, Type: req.Phone, Phone: req.Type}
+		clnt := sqlite.Client{ClientID: req.ClientID, Name: req.Name, Type: req.Type, Phone: req.Phone}
 		id, err := cltSaver.AddClient(clnt)
 		if errors.Is(err, storage.ErrExists) {
 			log.Info("client already exists", slog.String("client", req.Name))

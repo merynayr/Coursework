@@ -6,15 +6,14 @@
     <title>Кнопки для работы с данными на сервере</title>
     <link rel="stylesheet" type="text/css" href="/static/css/home.page.css">
     <script src="/static/js/home.page.js"></script>
-
 </head>
 <body>
     <div id="container">
-        <h1>Кнопки для работы с данными на сервере</h1>
+        <h1>Система учета арендаторов ТЦ</h1>
 
-        <!-- Кнопка для получения списка клиентов -->
-        <button onclick="getClients()">Получить список клиентов</button>
-
+        <script>getClients()</script>
+        <div id="result"></div>
+        <hr>
         <!-- Форма для отправки данных на сервер -->
         <form id="dataForm">
             <label for="clientID">ID клиента:</label>
@@ -31,9 +30,6 @@
 
             <input type="button" value="Отправить данные" onclick="sendData()">
         </form>
-
-        <!-- Здесь будет отображен результат -->
-        <div id="result"></div>
     </div>
 </body>
 </html>
