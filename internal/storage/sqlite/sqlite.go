@@ -27,7 +27,6 @@ func New(storagePath string) (*Storage, error) {
   );`,
 		`CREATE TABLE IF NOT EXISTS Boxes (
    box_id INT PRIMARY KEY,
-   box_number VARCHAR(50),
    status VARCHAR(50),
    floor INT,
    area DECIMAL(10, 2),
