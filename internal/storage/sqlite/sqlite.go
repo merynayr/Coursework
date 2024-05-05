@@ -49,6 +49,13 @@ func New(storagePath string) (*Storage, error) {
    status VARCHAR(50),
    FOREIGN KEY (contract_id) REFERENCES Contracts (contract_id)
   );`,
+		`CREATE TABLE IF NOT EXISTS BoxInfo (
+	box_id INT,
+	typeOfRepair VARCHAR(50),
+	conditioner BOOLEAN,
+	coment VARCHAR(255),
+	FOREIGN KEY (box_id) REFERENCES Boxes (box_id)
+   );`,
 	}
 
 	for _, table := range tables {
