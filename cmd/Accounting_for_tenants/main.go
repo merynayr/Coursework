@@ -64,7 +64,7 @@ func main() {
 	router.Post("/сlient/update", update.Update(log, storage))
 
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
-	router.Handle("/static/*", http.StripPrefix("/static", fileServer))
+	router.Handle("/ui/static/*", http.StripPrefix("/ui/static", fileServer))
 
 	//TODO: run server
 
