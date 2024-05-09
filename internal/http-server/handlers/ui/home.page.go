@@ -18,7 +18,8 @@ func New(log *slog.Logger) http.HandlerFunc {
 		// Инициализируем срез содержащий пути к двум файлам. Обратите внимание, что
 		// файл home.page.tmpl должен быть *первым* файлом в срезе.
 		files := []string{
-			"./ui/html/home.page.html",
+			"./ui/html/home.page.tmpl",
+			"./ui/html/test.tmpl",
 		}
 
 		ts, err := template.ParseFiles(files...)

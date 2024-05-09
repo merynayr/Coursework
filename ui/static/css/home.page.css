@@ -11,12 +11,81 @@ h1 {
 }
 
 #container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
+    width: 82%;
+    /* margin: 0 auto;
+    padding: 20px; */
+    margin-left: 230px;
+    padding: 1rem;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    background-color: rgb(12, 55, 14);
+    height: 35px;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+.menu{
+    background: rgb(12, 55, 14);
+    position: fixed;
+    top: 1;
+    left: 0;
+    width: 225px;
+    height: 100%;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+}
+
+.header h2{
+    color: #ffffff;
+    /* margin: 10px 0 5px; */
+    margin-bottom: 30px;
+    margin-top: auto;
+    text-align: center;
+}
+
+.menu h3{
+    color: #ffffff;
+    /* margin: 10px 0 5px; */
+    margin-bottom: 30px;
+    margin-top: auto;
+    text-align: center;
+}
+
+.menu ul{
+    padding-left: 0;
+    padding-top: 31px;
+}
+
+.menu ul li a{
+    display: block;
+    padding: 13px 15%;
+    border-bottom: 1px;
+    color: rgb(241, 237, 237);
+    font-size: 16px;
+    position: relative;
+    text-decoration: none;
+}
+
+.menu ul li a:hover,
+.menu ul li a.active{
+    background:rgb(12, 135, 55);
+    border-right: 2px solid rgb(5, 68, 104);
+}
+
+.menu ul li a:hover .icon,
+.menu ul li a.active .icon{
+    color: #0c7db1;
+    background:rgb(12, 135, 55);
+}
+
+.menu ul li a:hover:before,
+.menu ul li a.active:before{
+    display: block;
 }
 
 button {
