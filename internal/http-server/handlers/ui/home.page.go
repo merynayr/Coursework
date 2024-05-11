@@ -19,7 +19,6 @@ func New(log *slog.Logger) http.HandlerFunc {
 		// файл home.page.tmpl должен быть *первым* файлом в срезе.
 		files := []string{
 			"./ui/html/home.page.html",
-			"./ui/html/test.html",
 		}
 
 		ts, err := template.ParseFiles(files...)
