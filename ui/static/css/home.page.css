@@ -21,6 +21,18 @@ h1 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.container{
+    width: 82%;
+    /* margin: 0 auto;
+    padding: 20px; */
+    margin-left: 230px;
+    margin-top: 5px;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .header {
     background-color: rgb(12, 55, 14);
     height: 35px;
@@ -36,8 +48,8 @@ h1 {
     left: 0;
     width: 225px;
     height: 100%;
-    padding: 20px 0;
     transition: all 0.5s ease;
+    margin-top: 0 px;
 }
 
 .header h2{
@@ -58,7 +70,6 @@ h1 {
 
 .menu ul{
     padding-left: 0;
-    padding-top: 31px;
 }
 
 .menu ul li a{
@@ -154,4 +165,20 @@ th {
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+
+
+#wrapper {
+    width: 500px;
+    border: 1px solid black;
+    overflow: hidden; /* add this to contain floated children */
+}
+#first {
+    width: 300px;
+    float:left; /* add this */
+    border: 1px solid red;
+}
+#second {
+    border: 1px solid green;
+    float: left; /* add this */
 }
