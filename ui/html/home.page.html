@@ -8,34 +8,37 @@
     <script src="/ui/static/js/home.page.js"></script>
 </head>
 <body>
+    <div class = "header">
+        <h2>Система учета арендаторов ТЦ</h3>
+    </div>
     <div class = "menu">
         <ul style="list-style-type: none;">
             <li>
-                <a>
+                <a onclick="toggle_visibility(1)">
                     <span class="icon"><i class="fas fa-home"></i></span>
                     <span class="item">Главная</span>
                 </a>
             </li>
             <li>
-                <a>
+                <a onclick="toggle_visibility(2)">
                     <span class="icon"><i class="fas fa-desktop"></i></span>
                     <span class="item">Объекты аренды</span>
                 </a>
             </li>
             <li>
-                <a href="test.html">
+                <a onclick="toggle_visibility(3)">
                     <span class="icon"><i class="fas fa-user-friends"></i></span>
                     <span class="item">Арендаторы</span>
                 </a>
             </li>
             <li>
-                <a>
+                <a onclick="toggle_visibility(4)"> 
                     <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
                     <span class="item">Договоры аренды</span>
                 </a>
             </li>
             <li>
-                <a>
+                <a onclick="toggle_visibility(5)">
                     <span class="icon"><i class="fas fa-database"></i></span>
                     <span class="item">Оплаты</span>
                 </a>
@@ -44,8 +47,55 @@
         </ul>
     </div>
     <div>
-        <div class = "header">
-            <h2>Система учета арендаторов ТЦ</h3>
+        <div id = "1", class ="container">
+            <hr>
+            Главная
+            <br>
+            <hr>
+        </div>
+        <div id = "2", class="container">
+            <hr>
+            <br>
+            Объекты аренды
+            <br>
+            <hr>
+        </div>
+        <div id = "3", class ="container">
+            <h1>Система учета арендаторов ТЦ</h1>0.
+    
+            <script>getClients()</script>
+            <div id="result"></div>
+            <hr>
+            <!-- Форма для отправки данных на сервер -->
+            <form id="dataForm">
+                <label for="clientID">ID клиента:</label>
+                <input type="text" id="clientID" name="clientID"><br>
+    
+                <label for="name">Имя клиента:</label>
+                <input type="text" id="name" name="name"><br>
+    
+                <label for="type">Тип клиента:</label>
+                <input type="text" id="type" name="type"><br>
+    
+                <label for="phone">Телефон клиента:</label>
+                <input type="text" id="phone" name="phone"><br>
+    
+                <input type="button" value="Отправить данные" onclick="sendData()">
+            </form>
+        </div>
+        <div id = "4", class="container">
+            <hr>
+            <br>
+            Договоры аренды
+            <br>
+            <hr>
+        </div>
+        <div id = "5", class="container">
+            <hr>
+            <br>
+            Оплаты
+            <br>
+            <hr>
         </div>
     </div>
 </body>
