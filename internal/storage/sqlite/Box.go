@@ -1,34 +1,43 @@
 package sqlite
 
-import "fmt"
+import (
+	"Coursework/internal/storage"
+	"fmt"
+)
 
 type Box struct {
-	BoxID      int
-	BoxNumber  string
-	Status     string
-	Floor      int
-	Area       float64
-	RentAmount float64
+	BoxID          int
+	Status         string
+	Floor          int
+	Area           float64
+	Contract_id    int
+	Contract_start int
+	Contract_end   int
 }
 
-func AddBox(storage Storage, box Box) error {
+func (s *Storage) AddBox(box Box) (int64, error) {
 	const op = "AddBox"
-	query := `INSERT INTO Boxes (box_id, box_number, status, floor, area, rent_amount) VALUES (?, ?, ?, ?, ?, ?)`
+	query := `INSERT INTO Boxes (box_id, status, floor, area) VALUES (?, ?, ?, ?)`
 
-	_, err := storage.db.Exec(query, box.BoxID, box.BoxNumber, box.Status, box.Floor, box.Area, box.RentAmount)
+	res, err := s.db.Exec(query, box.BoxID, box.Status, box.Floor, box.Area)
 	if err != nil {
-		return fmt.Errorf("%s: %w", op, err)
+		return 0, fmt.Errorf("%s: %w", op, storage.ErrExists)
 	}
 
-	return nil
+	id, err := res.LastInsertId()
+	if err != nil {
+		return 0, fmt.Errorf("%s: failed to get last insert id: %w", op, err)
+	}
+
+	return id, nil
 }
 
-func SelectBoxes(storage Storage) ([]Box, error) {
+func (s *Storage) SelectBoxes() ([]Box, error) {
 	const op = "SelectBoxes"
 
-	query := `SELECT box_id, box_number, status, floor, area, rent_amount FROM Boxes`
+	query := `SELECT box_id, status, floor, area, Contracts.contract_id, Contracts.start_date, Contracts.end_date FROM Boxes JOIN Contracts ON box_id = Contracts.box_id`
 
-	rows, err := storage.db.Query(query)
+	rows, err := s.db.Query(query)
 	if err != nil {
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
@@ -38,7 +47,7 @@ func SelectBoxes(storage Storage) ([]Box, error) {
 
 	for rows.Next() {
 		var box Box
-		if err := rows.Scan(&box.BoxID, &box.BoxNumber, &box.Status, &box.Floor, &box.Area, &box.RentAmount); err != nil {
+		if err := rows.Scan(&box.BoxID, &box.Status, &box.Floor, &box.Area, &box.Contract_id, &box.Contract_start, &box.Contract_end); err != nil {
 			return nil, fmt.Errorf("%s: %w", op, err)
 		}
 		boxes = append(boxes, box)
