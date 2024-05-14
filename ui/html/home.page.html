@@ -6,7 +6,8 @@
     <title>Система учета арендаторов ТЦ</title>
     <link rel="stylesheet" type="text/css" href="/ui/static/css/home_page.css">
     <script src="/ui/static/js/home_page.js"></script>
-    <!-- <script src="/ui/static/js/Boxes.js"></script> -->
+    <script src="/ui/static/js/Boxes.js"></script>
+    <script src="/ui/static/js/Clients.js"></script>
 </head>
 <body>
     <div class = "header">
@@ -57,35 +58,32 @@
 
         <div id = "2", class="container">
             <h1>Объекты аренды</h1>
-
-            <!-- <script>getBoxes()</script>
-            <div id="result"></div>
+            <script>getBoxes()</script>
+            <div id="Boxes"></div>
             <hr>
-             Форма для отправки данных на сервер 
             <form id="dataForm">
-                <label for="boxID">ID помещения:</label>
+                <label for="boxID">Номер помещения:</label>
                 <input type="text" id="boxID" name="boxID"><br>
     
                 <label for="status">статус:</label>
                 <input type="text" id="status" name="status"><br>
-    
+                
                 <label for="type">этаж:</label>
-                <input type="text" id="floot" name="floor"><br>
+                <input type="text" id="floor" name="floor"><br>
     
                 <label for="phone">Площадь:</label>
                 <input type="text" id="area" name="area"><br>
     
-                <input type="button" value="Отправить данные" onclick="sendBox()">
-            </form> -->
+                <input type="button" value="Отправить данные" onclick="addBoxes()">
+            </form>
         </div>
 
         <div id = "3", class ="container">
             <h1>Арендаторы</h1>
     
             <script>getClients()</script>
-            <div id="result"></div>
+            <div id="Clients"></div>
             <hr>
-            <!-- Форма для отправки данных на сервер -->
             <form id="dataForm">
                 <label for="clientID">ID клиента:</label>
                 <input type="text" id="clientID" name="clientID"><br>
@@ -99,7 +97,7 @@
                 <label for="phone">Телефон клиента:</label>
                 <input type="text" id="phone" name="phone"><br>
     
-                <input type="button" value="Отправить данные" onclick="sendData()">
+                <input type="button" value="Отправить данные" onclick="addClients()">
             </form>
         </div>
         <div id = "4", class="container">

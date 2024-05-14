@@ -18,22 +18,23 @@ import (
 )
 
 type Request struct {
-	Status string `json:"status" validate:"required"`
-	Floor  int    `json:"floor" validate:"required"`
-	Area   float64    `json:"area" validate:"required"`
+	BoxID  int     `json:"box_id" validate:"required"`
+	Status string  `json:"status" validate:"required"`
+	Floor  int     `json:"floor" validate:"required"`
+	Area   float64 `json:"area" validate:"required"`
 }
 
 type Response struct {
 	resp.Response
 }
 
-type ClientSaver interface {
-	AddBox(box sqlite.Box) (int64, error) 
+type BoxSaver interface {
+	AddBox(box sqlite.Box) (int64, error)
 }
 
-func New(log *slog.Logger, boxSaver ClientSaver) http.HandlerFunc {
+func New(log *slog.Logger, boxSaver BoxSaver) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const op = "handlers.client.save.New"
+		const op = "handlers.box.save.New"
 
 		log = log.With(slog.String("op", op))
 
@@ -69,23 +70,23 @@ func New(log *slog.Logger, boxSaver ClientSaver) http.HandlerFunc {
 			return
 		}
 
-		box := sqlite.Box{Status: req.Status, Floor: req.Floor, Area: req.Area}
+		box := sqlite.Box{BoxID: req.BoxID, Status: req.Status, Floor: req.Floor, Area: req.Area}
 		id, err := boxSaver.AddBox(box)
 		if errors.Is(err, storage.ErrExists) {
-			// log.Info("client already exists", slog.String("client", req.Name))
-
-			render.JSON(w, r, resp.Error("client already exists"))
+			// log.Info("box already exists", slog.String("box", req.Name))
+			log.Info("box already exists")
+			render.JSON(w, r, resp.Error("box already exists"))
 
 			return
 		}
 		if err != nil {
-			log.Error("failed to add client", sl.Err(err))
+			log.Error("failed to add box", sl.Err(err))
 
-			render.JSON(w, r, resp.Error("failed to add client"))
+			render.JSON(w, r, resp.Error("failed to add box"))
 
 			return
 		}
-		log.Info("client added", slog.Int64("id", id))
+		log.Info("box added", slog.Int64("id", id))
 
 		responseOK(w, r)
 	}

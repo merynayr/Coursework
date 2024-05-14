@@ -35,7 +35,7 @@ func (s *Storage) AddBox(box Box) (int64, error) {
 func (s *Storage) SelectBoxes() ([]Box, error) {
 	const op = "SelectBoxes"
 
-	query := `SELECT box_id, status, floor, area, Contracts.contract_id, Contracts.start_date, Contracts.end_date FROM Boxes JOIN Contracts ON box_id = Contracts.box_id`
+	query := `SELECT Boxes.box_id, Boxes.status, Boxes.floor, Boxes.area From Boxes`
 
 	rows, err := s.db.Query(query)
 	if err != nil {
@@ -47,7 +47,7 @@ func (s *Storage) SelectBoxes() ([]Box, error) {
 
 	for rows.Next() {
 		var box Box
-		if err := rows.Scan(&box.BoxID, &box.Status, &box.Floor, &box.Area, &box.Contract_id, &box.Contract_start, &box.Contract_end); err != nil {
+		if err := rows.Scan(&box.BoxID, &box.Status, &box.Floor, &box.Area); err != nil {
 			return nil, fmt.Errorf("%s: %w", op, err)
 		}
 		boxes = append(boxes, box)

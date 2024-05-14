@@ -37,7 +37,7 @@ func New(log *slog.Logger, cltSaver ClientSaver) http.HandlerFunc {
 		const op = "handlers.client.save.New"
 
 		log = log.With(slog.String("op", op))
-
+		println(r.Body)
 		var req Request
 		err := render.DecodeJSON(r.Body, &req)
 

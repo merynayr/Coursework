@@ -62,10 +62,12 @@ func main() {
 	router.Use(middleware.URLFormat)
 
 	router.HandleFunc("/", ui.New(log))
+	
 	router.Post("/сlient/add", save.New(log, storage))
 	router.Post("/client/del", delete.Del(log, storage))
 	router.Get("/client/select", redirect.New(log, storage))
 	router.Post("/сlient/update", update.Update(log, storage))
+
 	router.Get("/box/select", selectBox.Select(log, storage))
 	router.Post("/box/add", addBox.New(log, storage))
 
