@@ -7,13 +7,17 @@ import (
 	"os"
 
 	"Coursework/internal/config"
-	"Coursework/internal/http-server/handlers/BoxHandlers/selectBox"
+
 	"Coursework/internal/http-server/handlers/BoxHandlers/addBox"
+	"Coursework/internal/http-server/handlers/BoxHandlers/selectBox"
 
 	"Coursework/internal/http-server/handlers/ClientHandlers/delete"
 	"Coursework/internal/http-server/handlers/ClientHandlers/redirect"
 	"Coursework/internal/http-server/handlers/ClientHandlers/save"
 	"Coursework/internal/http-server/handlers/ClientHandlers/update"
+
+	"Coursework/internal/http-server/handlers/ContractHandlers/addContract"
+	"Coursework/internal/http-server/handlers/ContractHandlers/selectContract"
 
 	"Coursework/internal/http-server/handlers/ui"
 	mwLogger "Coursework/internal/http-server/middleware/logger"
@@ -62,15 +66,17 @@ func main() {
 	router.Use(middleware.URLFormat)
 
 	router.HandleFunc("/", ui.New(log))
-	
+
 	router.Post("/сlient/add", save.New(log, storage))
 	router.Post("/client/del", delete.Del(log, storage))
 	router.Get("/client/select", redirect.New(log, storage))
 	router.Post("/сlient/update", update.Update(log, storage))
 
 	router.Get("/box/select", selectBox.Select(log, storage))
-	router.Post("/box/add", addBox.New(log, storage))
+	router.Post("/box/add", addBox.Add(log, storage))
 
+	router.Get("/contract/select", selectContract.Select(log, storage))
+	router.Post("/contract/add", addContract.Add(log, storage))
 
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 	router.Handle("/ui/static/*", http.StripPrefix("/ui/static", fileServer))

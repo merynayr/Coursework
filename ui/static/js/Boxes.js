@@ -7,7 +7,7 @@ function getBoxes() {
             var tableHTML = '<table><tr><th>Статус</th><th>Номер</th><th>Этаж</th><th>Площадь, м<sup>2</sup></th><th>Последний договор</th><th>Действия</th></tr>';
 
             data?.forEach(box => {
-                tableHTML += `<tr><td>${box.Status ?? ''}</td><td>${box.BoxID ?? ''}</td><td>${box.Floor ?? ''}</td><td>${box.Area ?? ''}</td><td>${box.Contract_id ?? ''}</td><td>${box.Contract_start ?? ''}</td><td>${box.Contract_end ?? ''}</td></tr>`;
+                tableHTML += `<tr><td>${box.Status ?? ''}</td><td>${box.BoxID ?? ''}</td><td>${box.Floor ?? ''}</td><td>${box.Area ?? ''}</td><td>${box.Contract_id ?? ""}</td><td>${box.Contract_start ?? ''}</td><td>${box.Contract_end ?? ''}</td></tr>`;
             });
 
             tableHTML += '</table>';

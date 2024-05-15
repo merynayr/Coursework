@@ -8,6 +8,7 @@
     <script src="/ui/static/js/home_page.js"></script>
     <script src="/ui/static/js/Boxes.js"></script>
     <script src="/ui/static/js/Clients.js"></script>
+    <script src="/ui/static/js/Contracts.js"></script>
 </head>
 <body>
     <div class = "header">
@@ -100,12 +101,34 @@
                 <input type="button" value="Отправить данные" onclick="addClients()">
             </form>
         </div>
+        
         <div id = "4", class="container">
+            <h1>Договоры аренды</h1>
+
+            <script>getContracts()</script>
+            <div id="Contracts"></div>
             <hr>
-            <br>
-            Договоры аренды
-            <br>
-            <hr>
+            <form id="dataForm">
+                <label for="ContractID">№ Договора:</label>
+                <input type="text" id="ContractID" name="ContractID"><br>
+    
+                <label for="ClientID">Имя клиента:</label>
+                <input type="text" id="ClientID" name="ClientID"><br>
+    
+                <label for="BoxID">Номер бокса:</label>
+                <input type="text" id="BoxID" name="BoxID"><br>
+    
+                <label for="DateSigned">Дата подписания:</label>
+                <input type="date" id="DateSigned" name="DateSigned"><br>
+    
+                <label for="StartDate">Дата начала аренды:</label>
+                <input type="date" id="StartDate" name="StartDate"><br>
+    
+                <label for="EndDate">Дата конца аренды:</label>
+                <input type="date" id="EndDate" name="EndDate"><br>
+    
+                <input type="button" value="Отправить данные" onclick="addContracts()">
+            </form>
         </div>
         <div id = "5", class="container">
             <hr>

@@ -1,4 +1,4 @@
-package addBox
+package addContract
 
 import (
 	"errors"
@@ -18,29 +18,31 @@ import (
 )
 
 type Request struct {
-	BoxID  int     `json:"box_id" validate:"required"`
-	Status string  `json:"status" validate:"required"`
-	Floor  int     `json:"floor" validate:"required"`
-	Area   float64 `json:"area" validate:"required"`
+	ContractID int    `json:"ContractID" validate:"required"`
+	ClientID   int    `json:"ClientID" validate:"required"`
+	BoxID      int    `json:"BoxID" validate:"required"`
+	DateSigned string `json:"DateSigned" validate:"required"`
+	StartDate  string `json:"StartDate" validate:"required"`
+	EndDate    string `json:"EndDate" validate:"required"`
 }
 
 type Response struct {
 	resp.Response
 }
 
-type BoxSaver interface {
-	AddBox(box sqlite.Box) (int64, error)
+type ContractSaver interface {
+	AddContract(contract sqlite.Contract) (int64, error)
 }
 
-func Add(log *slog.Logger, boxSaver BoxSaver) http.HandlerFunc {
+func Add(log *slog.Logger, ContractSaver ContractSaver) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const op = "handlers.box.save.Add"
+		const op = "handlers.contract.save.Add"
 
 		log = log.With(slog.String("op", op))
 
 		var req Request
 		err := render.DecodeJSON(r.Body, &req)
-
+		println(r.Body)
 		if errors.Is(err, io.EOF) {
 			// Такую ошибку встретим, если получили запрос с пустым телом.
 			// Обработаем её отдельно
@@ -70,23 +72,23 @@ func Add(log *slog.Logger, boxSaver BoxSaver) http.HandlerFunc {
 			return
 		}
 
-		box := sqlite.Box{BoxID: req.BoxID, Status: req.Status, Floor: req.Floor, Area: req.Area}
-		id, err := boxSaver.AddBox(box)
+		contract := sqlite.Contract{ContractID: req.ContractID, ClientID: req.ClientID, BoxID: req.BoxID, DateSigned: req.DateSigned, StartDate: req.StartDate, EndDate: req.EndDate}
+		id, err := ContractSaver.AddContract(contract)
 		if errors.Is(err, storage.ErrExists) {
-			// log.Info("box already exists", slog.String("box", req.Name))
-			log.Info("box already exists")
-			render.JSON(w, r, resp.Error("box already exists"))
+			// log.Info("contract already exists", slog.String("contract", req.Name))
+			log.Info("contract already exists")
+			render.JSON(w, r, resp.Error("contract already exists"))
 
 			return
 		}
 		if err != nil {
-			log.Error("failed to add box", sl.Err(err))
+			log.Error("failed to add contract", sl.Err(err))
 
-			render.JSON(w, r, resp.Error("failed to add box"))
+			render.JSON(w, r, resp.Error("failed to add contract"))
 
 			return
 		}
-		log.Info("box added", slog.Int64("id", id))
+		log.Info("contract added", slog.Int64("id", id))
 
 		responseOK(w, r)
 	}

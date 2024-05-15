@@ -23,7 +23,6 @@ func Select(log *slog.Logger, boxGetter BoxGetter) http.HandlerFunc {
 			log.Error("Failed to get boxes", sl.Err(err))
 			return
 		}
-		println(boxes)
 		// Отправляем список клиентов в формате JSON
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(boxes)

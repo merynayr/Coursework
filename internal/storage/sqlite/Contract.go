@@ -9,26 +9,31 @@ type Contract struct {
 	DateSigned string
 	StartDate  string
 	EndDate    string
+	ClientName string
 }
 
-func AddContract(storage Storage, contract Contract) error {
+func (s *Storage) AddContract(contract Contract) (int64, error) {
 	const op = "AddContract"
 	query := `INSERT INTO Contracts (contract_id, client_id, box_id, date_signed, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)`
 
-	_, err := storage.db.Exec(query, contract.ContractID, contract.ClientID, contract.BoxID, contract.DateSigned, contract.StartDate, contract.EndDate)
+	res, err := s.db.Exec(query, contract.ContractID, contract.ClientID, contract.BoxID, contract.DateSigned, contract.StartDate, contract.EndDate)
 	if err != nil {
-		return fmt.Errorf("%s: %w", op, err)
+		return 0, fmt.Errorf("%s: %w", op, err)
 	}
 
-	return nil
+	id, err := res.LastInsertId()
+	if err != nil {
+		return 0, fmt.Errorf("%s: failed to get last insert id: %w", op, err)
+	}
+	return id, nil
 }
 
-func SelectContracts(storage Storage) ([]Contract, error) {
+func (s *Storage) SelectContracts() ([]Contract, error) {
 	const op = "SelectContracts"
 
-	query := `SELECT contract_id, client_id, box_id, date_signed, start_date, end_date FROM Contracts`
+	query := `SELECT contract_id, Clients.name, Boxes.box_id, date_signed, start_date, end_date FROM Contracts JOIN Clients ON Contracts.client_id == Clients.client_id JOIN Boxes ON Contracts.box_id == Boxes.box_id`
 
-	rows, err := storage.db.Query(query)
+	rows, err := s.db.Query(query)
 	if err != nil {
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
@@ -38,7 +43,7 @@ func SelectContracts(storage Storage) ([]Contract, error) {
 
 	for rows.Next() {
 		var contract Contract
-		if err := rows.Scan(&contract.ContractID, &contract.ClientID, &contract.BoxID, &contract.DateSigned, &contract.StartDate, &contract.EndDate); err != nil {
+		if err := rows.Scan(&contract.ContractID, &contract.ClientName, &contract.BoxID, &contract.DateSigned, &contract.StartDate, &contract.EndDate); err != nil {
 			return nil, fmt.Errorf("%s: %w", op, err)
 		}
 		contracts = append(contracts, contract)
