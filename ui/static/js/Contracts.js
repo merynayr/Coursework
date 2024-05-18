@@ -17,17 +17,6 @@ function getContracts() {
             console.error('Произошла ошибка при получении списка договоров:', error);
         });
 }
-function formatDate(date) {
-    var date = new Date(date);
-    var yyyy = date.getFullYear().toString();
-    var mm = (date.getMonth() + 1).toString();
-    var dd = date.getDate().toString();
-
-    var mmChars = mm.split('');
-    var ddChars = dd.split('');
-
-    return ((ddChars[1] ? dd : "0" + ddChars[0])  + '.' + (mmChars[1] ? mm : "0" + mmChars[0]) + '.' + yyyy);
-}
 
 
 function addContracts() {

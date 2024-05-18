@@ -81,3 +81,22 @@ function toggle_visibility(id) {
     }
 
 }
+
+function formatDate(date) {
+    var date = new Date(date);
+    var yyyy = date.getFullYear().toString();
+    var mm = (date.getMonth() + 1).toString();
+    var dd = date.getDate().toString();
+
+    var mmChars = mm.split('');
+    var ddChars = dd.split('');
+
+    return ((ddChars[1] ? dd : "0" + ddChars[0])  + '.' + (mmChars[1] ? mm : "0" + mmChars[0]) + '.' + yyyy);
+}
+
+//  Добавляет ведущие нули в число, например 9 = 09
+Number.prototype.pad = function(size) {
+    var s = String(this);
+    while (s.length < (size || 2)) {s = "0" + s;}
+    return s;
+}

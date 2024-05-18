@@ -31,7 +31,7 @@ func (s *Storage) AddContract(contract Contract) (int64, error) {
 func (s *Storage) SelectContracts() ([]Contract, error) {
 	const op = "SelectContracts"
 
-	query := `SELECT contract_id, Clients.name, Boxes.box_id, date_signed, start_date, end_date FROM Contracts JOIN Clients ON Contracts.client_id == Clients.client_id JOIN Boxes ON Contracts.box_id == Boxes.box_id`
+	query := `SELECT contract_id, Clients.name, Boxes.box_id, date_signed, start_date, end_date FROM Contracts JOIN Clients ON Contracts.client_id == Clients.client_id JOIN Boxes ON Contracts.box_id = Boxes.box_id`
 
 	rows, err := s.db.Query(query)
 	if err != nil {
